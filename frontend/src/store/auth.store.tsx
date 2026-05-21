@@ -11,7 +11,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     console.log("this i  logged-in user data",user);
   },
   verify:async ()=>{
-    await axiosInstance.post()
+    await axiosInstance.post("")
   },
   logout: () => set({ authUser: null, isAuthenticated: false }),
 }));
