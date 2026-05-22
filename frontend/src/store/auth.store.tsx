@@ -10,8 +10,21 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({isAuthenticated:!!user})
     console.log("this i  logged-in user data",user);
   },
-  verify:async ()=>{
-    await axiosInstance.post("")
-  },
+verifyUser: async () => {
+  set({ isLoading: true });
+  try {
+    const response = await axiosInstance.get("/auth/verify");
+    set({ 
+      authUser: response.data.user, 
+      isAuthenticated: true 
+    });
+    console.log("Verification successful:", response.data.user);
+  } catch (error) {
+    console.error("Verification failed (User likely logged out):", error);
+    set({ authUser: null, isAuthenticated: false });
+  } finally {
+    set({ isLoading: false });
+  }
+},
   logout: () => set({ authUser: null, isAuthenticated: false }),
 }));

@@ -5,9 +5,14 @@ import Login from "./pages/Login";
 import Feed from "./pages/Feed";
 import Explore from "./pages/Explore";
 import { useAuthStore } from "./store/auth.store";
+import { useEffect } from "react";
 
 const App = () => {
   const authUser = useAuthStore((state)=> state.authUser)
+  const verifyUser = useAuthStore((state)=> state.verifyUser)
+  useEffect(()=>{
+    verifyUser()
+  }, [verifyUser])
   return (
     <div className="bg-gray-900 flex flex-col text-white h-screen overflow-auto">
       <Header></Header>

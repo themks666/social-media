@@ -7,6 +7,9 @@ const userSchema = new mongoose.Schema(
       required: [true, "you haven't provided any username"],
       minLength: 3,
     },
+    image:{
+      type:String,
+    },
     email: {
       type: String,
       unique: true,

@@ -13,6 +13,6 @@ interface AuthState {
   isLoading: boolean;
   setAuthUser: (user: AuthUser | null) => void;
   logout: () => void;
-  verify: () => void;
+  verifyUser: () => void;
 }
 export type { AuthUser, AuthState };
