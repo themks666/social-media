@@ -18,7 +18,6 @@ verifyUser: async () => {
       authUser: response.data.user, 
       isAuthenticated: true 
     });
-    console.log("Verification successful:", response.data.user);
   } catch (error) {
     console.error("Verification failed (User likely logged out):", error);
     set({ authUser: null, isAuthenticated: false });

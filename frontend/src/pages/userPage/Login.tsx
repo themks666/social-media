@@ -1,6 +1,6 @@
 import { useState, type ChangeEvent, type SubmitEvent } from "react";
-import { axiosInstance } from "../libs/axiosInstance";
-import { useAuthStore } from "../store/auth.store";
+import { axiosInstance } from "../../libs/axiosInstance";
+import { useAuthStore } from "../../store/auth.store";
 import { Navigate, useNavigate } from "react-router-dom";
 
 interface LoginFormData {

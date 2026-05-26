@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const { isAuthenticated, logout, authUser } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
 
   return (
     <nav className="bg-gray-900 border-b border-gray-800 sticky top-0 z-50 px-6 py-4">
@@ -38,9 +38,11 @@ export default function Navbar() {
               >
                 <span> Profile</span>
               </Link>
+              <Link to="/create-post">
               <button className="bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors duration-200">
                 + Create Post
               </button>
+              </Link>
 
               <button
                 onClick={logout}
@@ -97,8 +99,6 @@ export default function Navbar() {
           </button>
         </div>
       </div>
-
-      {/* Mobile Dropdown Drawer */}
       {isOpen && (
         <div className="md:hidden mt-4 pt-4 border-t border-gray-800 space-y-3 flex flex-col">
           <Link
@@ -119,8 +119,6 @@ export default function Navbar() {
               >
                 <span> Profile</span>
               </Link>
-
-          {/* Mobile Auth Sync */}
           {isAuthenticated ? (
             <>
               <button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors duration-200">

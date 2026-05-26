@@ -5,6 +5,7 @@ import express from "express";
 import cors from "cors";
 import { connect } from "./utils/connectDb.js";
 import authRouter from "./routes/auth.route.js";
+import postRouter from "./routes/post.route.js";
 import cookieParser from "cookie-parser";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use(
   }),
 );
 app.use("/api/auth", authRouter);
+app.use("/api/post", postRouter);
 
 connect();
 app.listen(port, "0.0.0.0", () => {
