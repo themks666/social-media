@@ -5,6 +5,6 @@ import { createPost, deletePosts, getAllPosts, updatePosts } from "../controller
 const router = express.Router();
 router.post("/create-post", userProtectedRoute, createPost)
 router.get("/get-all-post",getAllPosts)
-router.delete("/post/:id",deletePosts)
-router.put("/post/:id",updatePosts)
+router.delete("/post/:id",userProtectedRoute,deletePosts)
+router.put("/post/:id",userProtectedRoute,updatePosts)
 export default router

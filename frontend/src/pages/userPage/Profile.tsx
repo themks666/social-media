@@ -31,7 +31,7 @@ export default function Profile() {
       setErrorMsg("");
       try {
         console.log("sending profile request");
-        console.log("this is usernammme", authUser?.username);
+        console.log("this is username", authUser?.username);
         const response = await axiosInstance.get(
           `/auth/profile/${authUser?.username}`,
         );

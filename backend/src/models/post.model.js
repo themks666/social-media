@@ -7,6 +7,10 @@ const postSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    isVerified:{
+      type: Boolean,
+      default:false
+    },
     caption: {
       type: String,
       required: [true, "Captions are needed"],

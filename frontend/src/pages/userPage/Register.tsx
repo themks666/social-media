@@ -1,7 +1,9 @@
-import axios from "axios";
 import { useState,type ChangeEvent, type SubmitEvent } from "react";
+import { axiosInstance } from "../../libs/axiosInstance";
+import { useNavigate } from "react-router-dom";
 
 export default function Register() {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     username: "",
     email: "",
@@ -20,8 +22,9 @@ export default function Register() {
     e.preventDefault();
     setLoading(true);
     try {
-      const response  = await axios.post("http://localhost:3000/api/auth/register", formData);
+      const response  = await axiosInstance.post("/auth/register", formData);
       console.log(response)
+      navigate("/")
     } catch (error) {
       console.error("Frontend Submission Error:", error);
     } finally {

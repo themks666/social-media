@@ -1,5 +1,6 @@
 import React, { useState, useRef} from "react";
 import { axiosInstance } from "../../libs/axiosInstance";
+import { useNavigate } from "react-router-dom";
 interface PostPayload {
   caption: string;
   image: string;
@@ -7,6 +8,7 @@ interface PostPayload {
 }
 
 export default function CreatePost() {
+  const Navigate = useNavigate()
   const [captionText, setCaptionText] = useState<string>("");
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
@@ -52,6 +54,7 @@ export default function CreatePost() {
     const response = await axiosInstance.post("/post/create-post/", {captionText , imagePreview})
     console.log(response)
     setIsSubmitting(false);
+    Navigate('/')
   };
 
   return (

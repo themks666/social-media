@@ -39,17 +39,17 @@ export const createPost = async (req, res) => {
   }
 };
 
-export const getAllPosts = async () => {
+export const getAllPosts = async (req, res) => {
   try {
-    const allPosts = await PostModel.find()
+    const allPosts = await PostModel.find().sort({createdAt: -1}).populate("author", "username image").lean()
     if(!allPosts){
       return res
       .status(200)
-      .json({ message: "No post available",  success:true });
+      .json({ message: "No post available", success:true });
     }
     return res
       .status(200)
-      .json({ message: "user profile has been loaded", post, success:true });
+      .json({ message: "user profile has been loaded", post:allPosts, success:true });
   } catch (error) {
     console.error("Error in creating the post", error);
     return res
@@ -58,7 +58,7 @@ export const getAllPosts = async () => {
   }
 };
 
-export const deletePosts = async () => {
+export const deletePosts = async (req, res) => {
   try {
     const {id} = req.params
     const deletePost = await PostModel.findByIdAndDelete(id)
@@ -73,7 +73,7 @@ export const deletePosts = async () => {
       .json({ message: "Internal server error", success: false });
   }
 };
-export const updatePosts = async () => {
+export const updatePosts = async (req, res) => {
   try {
 
     return res

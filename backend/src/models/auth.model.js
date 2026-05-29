@@ -7,8 +7,12 @@ const userSchema = new mongoose.Schema(
       required: [true, "you haven't provided any username"],
       minLength: 3,
     },
-    image:{
+    profilePic:{
       type:String,
+    },
+    isVerified:{
+      type:Boolean,
+      default:false
     },
     email: {
       type: String,

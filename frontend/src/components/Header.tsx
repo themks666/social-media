@@ -121,9 +121,11 @@ export default function Navbar() {
               </Link>
           {isAuthenticated ? (
             <>
+            <Link to="/create-post">
               <button className="w-full bg-emerald-600 hover:bg-emerald-500 text-white text-sm font-semibold py-2.5 rounded-lg transition-colors duration-200">
                 + Create Post
               </button>
+              </Link>
               <button
                 onClick={logout}
                 className="text-left text-sm font-medium text-gray-400 hover:text-red-400 py-1"
