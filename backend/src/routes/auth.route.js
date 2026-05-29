@@ -6,6 +6,6 @@ router.post("/register", register);
 router.post("/login", login);
 router.get('/verify', userProtectedRoute, verify)
 router.get('/profile/:username', userProtectedRoute, userProfile)
-router.get('/users', getAllUsers)
+router.get('/users', userProtectedRoute,getAllUsers)
 router.put('/follow/:id', userProtectedRoute, followUser)
 export default router

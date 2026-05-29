@@ -17,7 +17,7 @@ const HomeLeftSide = () => {
 
         {AllUsers?.map((user) => {
           return (
-            <div className="space-y-4">
+            <div className="space-y-4" key={user._id}>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2.5">
                   <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-800 bg-gray-950 flex items-center justify-center shrink-0">

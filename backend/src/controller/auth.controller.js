@@ -79,7 +79,7 @@ export const login = async (req, res) => {
 
 export const verify = async (req, res) => {
   try {
-    return res.json({ message: "verified", user: req.user });
+    return res.json({ message: "verified", user: req.user , success: true,});
   } catch (error) {
     console.error("Registration Error:", error);
     return res
@@ -90,11 +90,7 @@ export const verify = async (req, res) => {
 
 export const userProfile = async (req, res) => {
   try {
-    console.log("data is loading");
-    console.log(req.params);
-
     const { username } = req.params;
-    console.log("this is username : ", username);
     if (!username) {
       return res
         .status(400)
@@ -110,7 +106,7 @@ export const userProfile = async (req, res) => {
     }
     return res
       .status(200)
-      .json({ message: "user profile has been loaded", user });
+      .json({ message: "user profile has been loaded", user,  success: true,});
   } catch (error) {
     console.error("Registration Error:", error);
     return res
@@ -121,13 +117,14 @@ export const userProfile = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await UserModel.find().select("-password -followings");
+    const id = req.user._id
+    const users = await UserModel.find({_id: {$ne: {_id:id}}}).select("-password -followings");
     if (!users) {
-      return res.status(400).json({ message: "No User is found " });
+      return res.status(400).json({ message: "No User is found ", success: false, });
     }
     return res
       .status(200)
-      .json({ message: "user profile has been loaded", users });
+      .json({ message: "user profile has been loaded", users, success: true, });
   } catch (error) {
     console.error("Error:", error);
     return res
@@ -136,14 +133,47 @@ export const getAllUsers = async (req, res) => {
   }
 };
 
-export const followUser = (req, res) => {
+export const followUser = async (req, res) => {
   try {
+    const currentUserId = req.user._id
 
-    const currentUseraId = String(req.user._id);
-    
-    const targetUserId = req.params.id
-    console.log(currentUseraId, targetUserId);
-    
+    const targetUserId = req.params.id;
+
+    if (currentUserId == targetUserId) {
+      return res.status(400).json({ message: "you can't follow yourself ", success: false,});
+    }
+    const currentUser = await UserModel.findOneAndUpdate(
+      {
+        _id: currentUserId,
+        following: { $ne: targetUserId },
+      },
+      {
+        $push: { following: targetUserId },
+      },
+      { returnDocument: true },
+    );
+    if (!currentUser) {
+      return res
+        .status(400)
+        .json({ message: "you have already followed the user" , success: false});
+    }
+    const targetUser = await UserModel.findByIdAndUpdate(
+      targetUserId,
+      {
+        $push: { followers: currentUserId },
+      },
+      { returnDocument: true },
+    );
+
+    if (!targetUser) {
+      return res
+        .status(400)
+        .json({ message: "No user have been found" });
+    }
+    console.log(currentUser, targetUser);
+    return res
+      .status(200)
+      .json({ message: "user profile has been loaded", success: true,  });
   } catch (error) {
     console.error("Error:", error);
     return res

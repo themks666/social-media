@@ -28,7 +28,6 @@ verifyUser: async () => {
   logout: () => set({ authUser: null, isAuthenticated: false }),
   getAllUser:async ()=>{
     const response = await axiosInstance.get("/auth/users")
-    console.log("this all user", response)
     set({allUsers: response.data.users})
   }
 }));

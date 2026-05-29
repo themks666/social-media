@@ -28,7 +28,7 @@ const FeedCard = ({
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full border border-gray-800 bg-gray-950 overflow-hidden shrink-0 flex items-center justify-center">
               <div className="w-full h-full bg-emerald-600/15 text-emerald-400 font-bold text-sm flex items-center justify-center uppercase">
-                {author.username.charAt(0).toUpperCase()}
+                {author?.username.charAt(0).toUpperCase()}
               </div>
             </div>
 
