@@ -4,7 +4,6 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import type { PostAuthor } from "../types/types";
 
-// Extends interface to accept the comments array from your backend database
 interface FeedCardProps {
   _id: string;
   tags: string[];
@@ -12,7 +11,7 @@ interface FeedCardProps {
   caption: string;
   author: PostAuthor;
   likes: string[];
-  comments: any[]; // <-- Added this field to interface
+  comments: any[]; 
   createdAt: string;
 }
 
@@ -25,13 +24,12 @@ const FeedCard = ({
   image,
   caption,
   likes,
-  comments = [], // <-- Extract comments with a default fallback
+  comments = [],
   createdAt,
 }: FeedCardProps) => {
   return (
     <div className="space-y-6">
       <div className="bg-gray-900 border border-gray-800/80 rounded-2xl overflow-hidden shadow-xl">
-        {/* POST AUTHOR HEADER */}
         <div className="p-5 flex items-center justify-between">
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 rounded-full border border-gray-800 bg-gray-950 overflow-hidden shrink-0 flex items-center justify-center">
@@ -39,7 +37,6 @@ const FeedCard = ({
                 {author?.username?.charAt(0).toUpperCase() || "U"}
               </div>
             </div>
-
             <div>
               <div className="flex items-center gap-1.5">
                 <h4 className="text-sm font-bold text-white hover:text-emerald-400 transition-colors cursor-pointer">
@@ -56,15 +53,12 @@ const FeedCard = ({
               </p>
             </div>
           </div>
-
           <button className="text-gray-500 hover:text-white transition-colors p-1.5 rounded-lg">
             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 12h.01M12 12h.01M19 12h.01M12 12h.01M12 5h.01M12 19h.01" />
             </svg>
           </button>
         </div>
-
-        {/* CAPTION & TAGS */}
         <div className="px-5 pb-3">
           <p className="text-sm text-gray-200 leading-relaxed whitespace-pre-wrap">
             {caption}{" "}
@@ -77,8 +71,6 @@ const FeedCard = ({
             </span>
           </p>
         </div>
-
-        {/* IMAGE CONTAINER */}
         {image && (
           <div className="border-y border-gray-800/60 max-h-120 overflow-hidden bg-gray-950">
             <img
@@ -88,8 +80,6 @@ const FeedCard = ({
             />
           </div>
         )}
-
-        {/* ACTION UTILITIES FOOTER */}
         <div className="px-5 py-3.5 bg-gray-900/40 border-b border-gray-800/40 flex items-center justify-between text-xs text-gray-400">
           <div className="flex items-center space-x-6">
             <button className="flex items-center gap-1.5 transition-all hover:scale-105 active:scale-95">
@@ -106,7 +96,6 @@ const FeedCard = ({
               <span>{comments?.length || 0} comments</span>
             </button>
           </div>
-
           <button className="flex items-center gap-1.5 hover:text-white transition-colors">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8.684 10.742l4.606-2.404m0 0a3 3 0 10-.224-4.03l-4.606 2.404m1.152 4.44a3 3 0 11-4.508 2.871l-4.508-2.529m11.168 2.193a3 3 0 114.508 2.871l-4.508 2.53" />
@@ -114,15 +103,11 @@ const FeedCard = ({
             <span>Share</span>
           </button>
         </div>
-
-        {/* INTEGRATION POINT: Render comments inside the post frame wrapper */}
         <CommentSection postId={_id} comments={comments} />
       </div>
     </div>
   );
 };
-
-/* --- COMMENT SECTION SUB-COMPONENT --- */
 interface CommentSectionProps {
   postId: string;
   comments: any[];
@@ -131,8 +116,6 @@ interface CommentSectionProps {
 const CommentSection = ({ postId, comments = [] }: CommentSectionProps) => {
   const [commentText, setCommentText] = useState("");
   const addComment = usePostStore((state) => state.addComment);
-
-  // FIX 2: Changed React.SubmitEvent<HTMLFormElement> to standard React.FormEvent
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!commentText.trim()) return;
@@ -140,10 +123,8 @@ const CommentSection = ({ postId, comments = [] }: CommentSectionProps) => {
     await addComment(postId, commentText);
     setCommentText("");
   };
-
   return (
     <div className="border-t border-gray-800/60 bg-gray-900/20 px-5 py-4 space-y-4">
-      {/* Existing Comments Listing */}
       {comments.length > 0 && (
         <div className="space-y-3 max-h-60 overflow-y-auto pr-1">
           {comments.map((comment) => (
@@ -166,8 +147,6 @@ const CommentSection = ({ postId, comments = [] }: CommentSectionProps) => {
           ))}
         </div>
       )}
-
-      {/* Input Action Form Field */}
       <form onSubmit={handleSubmit} className="flex gap-3 items-center pt-2">
         <div className="w-8 h-8 rounded-full bg-emerald-600/15 border border-emerald-500/20 flex items-center justify-center font-bold text-emerald-400 uppercase text-xs shrink-0">
           M
