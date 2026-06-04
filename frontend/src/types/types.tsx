@@ -7,10 +7,12 @@ interface AuthUser {
   followers: string[];
   createdAt: string;
   updatedAt: string;
+  profilePic?: string;
 }
 interface AllUser {
   _id: string;
   username: string;
+  profilePic?:string;
   isVerified: boolean;
   followers: string[];
 }
@@ -46,8 +48,10 @@ interface AuthState {
 
 interface PostState {
   posts: Post[];
+  addComment:(postId:string, commentText:string)=>void,
   isFetchingPosts: boolean;
-  getPost: () => Promise<void>; // Updated from () => void to handle async/await signatures safely
+  getPost: () => Promise<void>;
+  addPost:()=> void;
 }
 
 export type { AuthUser, AuthState, PostState, Post, PostAuthor };

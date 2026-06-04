@@ -2,32 +2,28 @@ import { PostModel } from "../models/post.model.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { captionText, imagePreview } = req.body;
+    const {  imagePreview:image,captionText:caption } = req.body;
     const userId = req.user._id;
-    console.log(userId, captionText, imagePreview);
-    if (!captionText) {
+    if (!caption) {
       return res.status(400).json({ message: "Incomplete", success: false });
     }
-    console.log("good");
     let extractedTags = [];
-    if (captionText) {
+    if (caption) {
       const hashRegex = /#(\w+)/g;
-      const matches = captionText.match(hashRegex);
+      const matches = caption.match(hashRegex);
       if (matches) {
         extractedTags = matches.map((tag) =>
           tag.replace("#", "").toLowerCase().trim(),
         );
       }
     }
-    console.log("user has is being saved");
     const post = new PostModel({
-      caption: captionText,
-      image: imagePreview,
+      caption: caption,
+      image: image,
       tags: extractedTags,
       author: userId,
     });
     await post.save();
-    console.log("user has been saved");
     return res
       .status(200)
       .json({ message: "user profile has been loaded", post });

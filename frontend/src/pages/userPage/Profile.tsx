@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/auth.store";
 import { axiosInstance } from "../../libs/axiosInstance";
+import { Link } from "react-router-dom";
 
 
 
@@ -18,24 +19,20 @@ interface ProfileData {
 
 export default function Profile() {
   const authUser = useAuthStore((state) => state.authUser);
-  console.log("this is auth user : ", authUser?.username);
-
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
 
   useEffect(() => {
-    console.log("Profile page");
     const fetchProfile = async () => {
       setLoading(true);
       setErrorMsg("");
+      console.log(authUser?.username);
+      
       try {
-        console.log("sending profile request");
-        console.log("this is username", authUser?.username);
         const response = await axiosInstance.get(
           `/auth/profile/${authUser?.username}`,
         );
-        console.log(response);
         setProfileData(response.data);
       } catch (err: any) {
         setErrorMsg(err.response?.data?.message || "Could not find profile.");
@@ -90,12 +87,12 @@ export default function Profile() {
               </h1>
 
               {isOwnProfile ? (
-                <a
-                  href="/settings/profile"
+                <Link
+                  to={`/settings/profile/${authUser?.username}`}
                   className="bg-gray-800 hover:bg-gray-700 text-xs font-semibold px-4 py-2 rounded-xl border border-gray-700 transition-colors"
                 >
                   Edit Profile
-                </a>
+                </Link>
               ) : (
                 <button className="bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold px-4 py-2 rounded-xl transition-colors">
                   Follow

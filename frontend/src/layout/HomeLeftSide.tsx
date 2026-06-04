@@ -20,12 +20,14 @@ const HomeLeftSide = () => {
             <div className="space-y-4" key={user._id}>
               <div className="flex items-center justify-between text-xs">
                 <div className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-800 bg-gray-950 flex items-center justify-center shrink-0">
-                    <img
-                      src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100"
-                      alt="avatar"
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="w-8 h-8 rounded-full overflow-hidden border border-gray-800 bg-gray-950 flex items-center justify-center shrink-0"> 
+              {user?.profilePic ? (
+                <img src={user.profilePic} alt="profile picture" className="h-full object-cover" />
+              ) : (
+                 <div className="w-full h-full bg-emerald-600/15 text-emerald-400 font-bold text-lg flex items-center justify-center uppercase">
+                  {user?.username.charAt(0)}
+                </div>
+              )}
                   </div>
 
                   <div>

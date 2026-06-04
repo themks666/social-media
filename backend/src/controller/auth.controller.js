@@ -181,3 +181,25 @@ export const followUser = async (req, res) => {
       .json({ message: "Internal server error", success: false });
   }
 };
+
+
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.user._id
+    const {username, imagePreview:profilePic} = req.body
+    console.log(req.body);
+    
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, {$set:{username, profilePic}}, {returnDocument: 'after'})
+    console.log(updatedUser);
+    
+    return res
+      .status(200)
+      .json({ message: "", success:true });
+  } catch (error) {
+    console.error("Error in creating the post", error);
+    return res
+      .status(500)
+      .json({ message: "Internal server error", success: false });
+  }
+};

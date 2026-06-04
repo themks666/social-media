@@ -16,4 +16,10 @@ export const usePostStore = create<PostState>((set) => ({
       set({ isFetchingPosts: false });
     }
   },
+  addComment:(postId, comment)=>{
+    console.log(postId, comment)
+  },
+  addPost: ()=>{
+    
+  }
 }));

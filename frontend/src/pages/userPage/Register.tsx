@@ -24,7 +24,7 @@ export default function Register() {
     try {
       const response  = await axiosInstance.post("/auth/register", formData);
       console.log(response)
-      navigate("/")
+      navigate("/login")
     } catch (error) {
       console.error("Frontend Submission Error:", error);
     } finally {

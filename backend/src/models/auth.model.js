@@ -10,6 +10,9 @@ const userSchema = new mongoose.Schema(
     profilePic:{
       type:String,
     },
+    bio:{
+      type:String,
+    },
     isVerified:{
       type:Boolean,
       default:false

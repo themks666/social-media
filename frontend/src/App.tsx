@@ -7,6 +7,7 @@ import Explore from "./pages/userPage/Explore";
 import { useAuthStore } from "./store/auth.store";
 import { useEffect } from "react";
 import Profile from "./pages/userPage/Profile";
+import ProfileUpdate from "./pages/userPage/ProfileUpdate";
 import Home from "./pages/userPage/Home";
 import CreatePost from "./pages/postPages/CreatePost";
 import HomeWithAuth from "./pages/userPage/HomeWithAuth";
@@ -40,6 +41,7 @@ const App = () => {
           <Route path="/explore" element={<Explore />} />
           <Route path="/create-post" element={<CreatePost />} />
           <Route path="/settings/profile" element={<Profile />} />
+          <Route path="/settings/profile/:username" element={<ProfileUpdate />} />
         </Routes>
       </div>
     </div>
