@@ -33,7 +33,7 @@ export default function Navbar() {
           {isAuthenticated ? (
             <div className="flex items-center space-x-6">
               <Link
-                to="/settings/profile"
+                to="/settings/user-profile"
                 className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 flex items-center gap-2"
               >
                 <span> Profile</span>
@@ -114,7 +114,7 @@ export default function Navbar() {
             Explore
           </Link>
            <Link
-                to="/settings/profile"
+                to="/settings/user-profile"
                 className="text-sm font-medium text-gray-400 hover:text-white transition-colors duration-200 flex items-center gap-2"
               >
                 <span> Profile</span>

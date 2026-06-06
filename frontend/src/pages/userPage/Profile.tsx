@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useAuthStore } from "../../store/auth.store";
 import { axiosInstance } from "../../libs/axiosInstance";
 import { Link } from "react-router-dom";
-
-
+import { usePostStore } from "../../store/post.store";
+import UserPosts from "../../layout/UserPost";
 
 interface ProfileData {
   user: {
@@ -19,6 +19,8 @@ interface ProfileData {
 
 export default function Profile() {
   const authUser = useAuthStore((state) => state.authUser);
+  const fetchPost = usePostStore((state) => state.getUserPosts);
+  const userPosts = usePostStore((state) => state.userPosts);
   const [profileData, setProfileData] = useState<ProfileData | null>(null);
   const [loading, setLoading] = useState(true);
   const [errorMsg, setErrorMsg] = useState("");
@@ -27,12 +29,11 @@ export default function Profile() {
     const fetchProfile = async () => {
       setLoading(true);
       setErrorMsg("");
-      console.log(authUser?.username);
-      
       try {
         const response = await axiosInstance.get(
           `/auth/profile/${authUser?.username}`,
         );
+        fetchPost();
         setProfileData(response.data);
       } catch (err: any) {
         setErrorMsg(err.response?.data?.message || "Could not find profile.");
@@ -82,10 +83,7 @@ export default function Profile() {
           </div>
           <div className="flex-1 text-center md:text-left space-y-4">
             <div className="flex flex-col sm:flex-row items-center gap-4">
-              <h1 className="text-2xl font-bold tracking-tight">
-                {user.username}
-              </h1>
-
+              <h1 className="text-2xl font-bold tracking-tight">{user.username}</h1>
               {isOwnProfile ? (
                 <Link
                   to={`/settings/profile/${authUser?.username}`}
@@ -101,57 +99,26 @@ export default function Profile() {
             </div>
             <div className="flex items-center justify-center md:justify-start space-x-6 text-sm text-gray-300">
               <div>
-                <span className="font-bold text-white">{posts?.length}</span>{" "}
-                posts
+                <span className="font-bold text-white">{posts?.length}</span> posts
               </div>
               <div className="cursor-pointer hover:text-white">
-                <span className="font-bold text-white">
-                  {user.followers?.length || 0}
-                </span>{" "}
-                followers
+                <span className="font-bold text-white">{user.followers?.length || 0}</span> followers
               </div>
               <div className="cursor-pointer hover:text-white">
-                <span className="font-bold text-white">
-                  {user.following?.length || 0}
-                </span>{" "}
-                following
+                <span className="font-bold text-white">{user.following?.length || 0}</span> following
               </div>
             </div>
           </div>
         </div>
 
         <hr className="border-gray-900 mb-8" />
-        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-6">
-          Published Content
-        </h3>
-
-        {posts?.length === 0 ? (
+        {userPosts?.length === 0 ? (
           <div className="text-center py-16 bg-gray-900/50 border border-dashed border-gray-800 rounded-2xl text-gray-500">
             No posts shared yet.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-            {posts?.map((post) => (
-              <div
-                key={post._id}
-                className="aspect-square bg-gray-900 border border-gray-800 rounded-xl overflow-hidden relative group cursor-pointer hover:border-gray-700 transition-all shadow-md"
-              >
-                {post.image ? (
-                  <img
-                    src={post.image}
-                    alt="Content"
-                    className="w-full h-full object-cover"
-                  />
-                ) : (
-                  <div className="p-4 h-full flex items-center justify-center text-center text-sm text-gray-300 bg-gradient-to-br from-gray-900 to-gray-950">
-                    <p className="line-clamp-4 italic">"{post.caption}"</p>
-                  </div>
-                )}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center text-xs font-bold text-gray-200">
-                  View Post
-                </div>
-              </div>
-            ))}
+          <div className="w-full">
+            <UserPosts posts={userPosts} />
           </div>
         )}
       </div>

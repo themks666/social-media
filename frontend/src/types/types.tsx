@@ -31,6 +31,7 @@ interface Post {
   caption: string;
   author: PostAuthor;
   likes: string[];
+  comment:string[];
   createdAt: string;
   updatedAt: string;
 }
@@ -48,10 +49,11 @@ interface AuthState {
 
 interface PostState {
   posts: Post[];
+  userPosts: Post[];
+  getUserPosts:()=>void;
   addComment:(postId:string, commentText:string)=>void,
   isFetchingPosts: boolean;
   getPost: () => Promise<void>;
-  addPost:()=> void;
 }
 
 export type { AuthUser, AuthState, PostState, Post, PostAuthor };

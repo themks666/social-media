@@ -3,9 +3,6 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../utils/generateToken.js";
 
 export const register = async (req, res) => {
-  console.log("request incomming....");
-  console.log(req.body);
-
   const { username, password, email } = req.body;
   if (!username || !email || !password) {
     return res.status(400).json({
@@ -15,13 +12,12 @@ export const register = async (req, res) => {
   }
   try {
     const emailExist = await UserModel.findOne({ email });
-    console.log("User already exist");
+
     if (emailExist) {
       return res
         .status(400)
         .json({ message: "Email is already registered", success: false });
     }
-    console.log("user has been registered");
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = new UserModel({
       email,
@@ -97,8 +93,6 @@ export const userProfile = async (req, res) => {
         .json({ message: "User was not found", success: false });
     }
     const user = await UserModel.findOne({ username }).select("-password");
-    console.log(user);
-
     if (!user) {
       return res
         .status(400)
@@ -170,7 +164,6 @@ export const followUser = async (req, res) => {
         .status(400)
         .json({ message: "No user have been found" });
     }
-    console.log(currentUser, targetUser);
     return res
       .status(200)
       .json({ message: "user profile has been loaded", success: true,  });
@@ -188,11 +181,7 @@ export const updateProfile = async (req, res) => {
   try {
     const userId = req.user._id
     const {username, imagePreview:profilePic} = req.body
-    console.log(req.body);
-    
     const updatedUser = await UserModel.findByIdAndUpdate(userId, {$set:{username, profilePic}}, {returnDocument: 'after'})
-    console.log(updatedUser);
-    
     return res
       .status(200)
       .json({ message: "", success:true });

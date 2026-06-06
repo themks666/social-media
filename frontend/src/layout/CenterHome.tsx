@@ -62,11 +62,12 @@ const CenterHome = () => {
 
         return (
           <FeedCard
-            key={post._id} // 1. Always pass your loop key explicitly!
+            key={post._id}
             _id={post._id}
             tags={post.tags}
             image={post.image}
             caption={post.caption}
+            comments={post.comment}
             author={post.author}
             likes={post.likes}
             createdAt={post.createdAt}

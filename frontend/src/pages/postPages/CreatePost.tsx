@@ -47,7 +47,7 @@ export default function CreatePost() {
       console.log(response);
       Navigate("/")
     } catch (error) {
-      
+      console.log(error)
     }finally{
         setIsSubmitting(false)
     }

@@ -40,7 +40,7 @@ const App = () => {
           <Route path="/feed" element={<Feed />} />
           <Route path="/explore" element={<Explore />} />
           <Route path="/create-post" element={<CreatePost />} />
-          <Route path="/settings/profile" element={<Profile />} />
+          <Route path="/settings/user-profile" element={<Profile />} />
           <Route path="/settings/profile/:username" element={<ProfileUpdate />} />
         </Routes>
       </div>
